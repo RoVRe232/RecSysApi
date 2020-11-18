@@ -19,6 +19,7 @@ public class RecsysRestapiApplication {
 			new InputStreamReader(queryProcessor.getInputStream()));
 	private static final StreamGobbler queryProcessorErrGobbler = new StreamGobbler(queryProcessor.getErrorStream(), "ERROR");
     private static VideoRepository repo = null;
+    private static UserRepository userRepository = null;
 	public static void main(String[] args) {
 		System.setProperty("spring.devtools.restart.enabled", "false");
 		Checker.doChecks();
@@ -50,5 +51,9 @@ public class RecsysRestapiApplication {
 
 	public static void setRepo(VideoRepository repo) {
 		RecsysRestapiApplication.repo = repo;
+	}
+
+	public static void setUserRepo(UserRepository userRepo) {
+		RecsysRestapiApplication.userRepository = userRepo;
 	}
 }

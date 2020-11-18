@@ -34,14 +34,36 @@ public abstract class DatabaseSearcher {
             int id;
             double match;
             String title;
-            id = Integer.valueOf(it.substring(it.indexOf('(')+1, it.indexOf(',')).trim());
-            match = Double.valueOf(it.substring(it.indexOf(',')+1, it.indexOf(')')).trim());
+            id = Integer.parseInt(it.substring(it.indexOf('(')+1, it.indexOf(',')).trim());
+            match = Double.parseDouble(it.substring(it.indexOf(',')+1, it.indexOf(')')).trim());
             title = it.substring(it.indexOf(')')+1).trim();
             splitInput[i++] = Normalizer.normalize(title,Normalizer.Form.NFD);//transforma literele cu accente in litere normale
             //TODO either normalize all chars or use UTF-8 everywhere
         }
         return splitInput;
     }
+
+    public static  List<VideoResult> processPythonQueryResultToList(String input){
+        String[] splitInput = input.split("\n");
+        ArrayList<VideoResult> results = new ArrayList<>();
+        int i=0;
+        for(var it:splitInput ){
+            int id;
+            double match;
+            String title;
+            id = Integer.parseInt(it.substring(it.indexOf('(')+1, it.indexOf(',')).trim());
+            match = Double.parseDouble(it.substring(it.indexOf(',')+1, it.indexOf(')')).trim());
+            title = it.substring(it.indexOf(')')+1).trim();
+
+            VideoResult videoResult = new VideoResult(id,match,Normalizer.normalize(title,Normalizer.Form.NFD));
+            results.add(videoResult);
+
+            //TODO either normalize all chars or use UTF-8 everywhere
+        }
+        return results;
+    }
+
+
 
     public static <T> String writeListToJson(List<T> input) throws IOException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
