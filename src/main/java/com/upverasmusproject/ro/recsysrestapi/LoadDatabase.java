@@ -13,11 +13,13 @@ public class LoadDatabase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
     @Bean
-    CommandLineRunner initDatabase(VideoRepository repo){
+    CommandLineRunner initDatabase(VideoRepository repo, UserRepository userRepo){
         ArrayList<String> keys = new ArrayList<>();
         keys.add("testkey1");
         keys.add("testkey2");
         return args -> {
+            log.info("Preloading" + userRepo.save(new User("q2za-rtx5-4asd-rrrw", "John", "Visual",
+                    new ArrayList<>())));
             log.info("Preloading"+ repo.save(new Video("0x36-3232-asdd-132e",
                     "VideoName", keys)));
             log.info("Preloading"+ repo.save(new Video("0x26-7432-asdd-132e",
@@ -27,6 +29,7 @@ public class LoadDatabase {
         };
 
     }
+
 
 
 }

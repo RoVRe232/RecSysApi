@@ -2,8 +2,10 @@ package com.upverasmusproject.ro.recsysrestapi;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,12 +15,15 @@ import java.util.List;
 public class VideoController {
 
     private final VideoRepository repo;
+    private final UserRepository userRepo;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    VideoController(VideoRepository repo) {
+    VideoController(VideoRepository repo, UserRepository userRepo) {
 
         RecsysRestapiApplication.setRepo(repo);
+        RecsysRestapiApplication.setUserRepo(userRepo);
         this.repo = repo;
+        this.userRepo = userRepo;
     }
 
     public VideoRepository getRepo(){
@@ -60,7 +65,12 @@ public class VideoController {
     }
 
     @RequestMapping("/search") //TODO improve search method
-    String searchMethod(@RequestParam HashMap<String,Object> formData) {
+    String searchMethod(@RequestParam HashMap<String,Object> formData) throws IOException {
+        User currentUser = null;
+        String userToken = (String)formData.get("usertoken");
+        if(!(userToken==null || userToken.equals(""))){
+             currentUser = userRepo.findUserByToken(userToken);
+        }
 
         String searchedKeysBulk = (String)formData.get("keywords");
         if(searchedKeysBulk==null)
@@ -100,21 +110,24 @@ public class VideoController {
             errThread.interrupt();
         }
 
-        List<Video> foundVideos = DatabaseSearcher.search(repo,DatabaseSearcher.processPythonQueryResult(queryResult.toString()));
-        if(foundVideos!=null){
-            try {
-                Thread logQueryResult = new Thread(new QueryLogger(searchedKeysBulk, queryResult.toString()));
-                logQueryResult.start();
-                return DatabaseSearcher.writeListToJson(foundVideos);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
+        List<VideoResult> videoResults = DatabaseSearcher.processPythonQueryResultToList(queryResult.toString());
+        List<Video> foundVideos = DatabaseSearcher.search(repo,DatabaseSearcher.processPythonQueryResult(queryResult.toString()));
+        try {
+            Thread logQueryResult = new Thread(new QueryLogger(searchedKeysBulk,
+                    DatabaseSearcher.writeListToJson(videoResults), currentUser));
+            logQueryResult.start();
+            return DatabaseSearcher.writeListToJson(foundVideos);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        return queryResult.toString();
+        return DatabaseSearcher.writeListToJson(videoResults);
 
     }
+
+
+
 
     @GetMapping("/callpython")
     OutputStreamWriter callPython(){
