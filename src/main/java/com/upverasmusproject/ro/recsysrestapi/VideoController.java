@@ -128,7 +128,7 @@ public class VideoController {
 
 
 
-
+/*
     @GetMapping("/callpython")
     OutputStreamWriter callPython(){
         PythonRunner pythonRunner = new PythonRunner();
@@ -144,7 +144,7 @@ public class VideoController {
         CoreNLPStarter cnlpStarter = new CoreNLPStarter();
         cnlpStarter.run();
         return "Started cnlp server!";
-    }
+    }*/
 
 
 }
