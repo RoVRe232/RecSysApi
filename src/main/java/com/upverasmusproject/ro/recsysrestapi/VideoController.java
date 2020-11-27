@@ -2,6 +2,11 @@ package com.upverasmusproject.ro.recsysrestapi;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.python.core.PyInstance;
+import org.python.core.PyInteger;
+import org.python.core.PyObject;
+import org.python.core.PyString;
+import org.python.util.PythonInterpreter;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
@@ -127,7 +132,20 @@ public class VideoController {
     }
 
 
+    @RequestMapping("/oldsearch") //TODO improve search method
+    String oldSearchMethod(@RequestParam HashMap<String,Object> formData) throws IOException {
+        User currentUser = null;
+        String userToken = (String)formData.get("usertoken");
+        if(!(userToken==null || userToken.equals(""))){
+            currentUser = userRepo.findUserByToken(userToken);
+        }
 
+        String searchedKeysBulk = (String)formData.get("keywords");
+        if(searchedKeysBulk==null)
+            return "Empty keys bulk";
+
+        return PythonRunner.invokeOldQuery(searchedKeysBulk, 10);
+    }
 /*
     @GetMapping("/callpython")
     OutputStreamWriter callPython(){

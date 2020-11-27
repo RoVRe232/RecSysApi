@@ -20,7 +20,11 @@ public class PythonRunner {
     }
 
 
-
+    /**
+     *  Uses processBuilder to start a process using args
+     * @param args
+     * @return Process
+     */
     public Process runCommand(ArrayList<String> args){
         Runtime runtime = Runtime.getRuntime();
         ProcessBuilder processBuilder = new ProcessBuilder(args);
@@ -33,18 +37,6 @@ public class PythonRunner {
         }
     }
 
-    public Process runCommand(ArrayList<String> args, File outputFile){
-        Runtime runtime = Runtime.getRuntime();
-        ProcessBuilder processBuilder = new ProcessBuilder(args);
-
-        try {
-            Process proc = processBuilder.start();
-            return proc;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     public String readProcessOutput(InputStream is) throws IOException {
         String buffer = "";
@@ -59,5 +51,16 @@ public class PythonRunner {
             e.printStackTrace();
         }
         return buffer;
+    }
+
+    public static String invokeOldQuery(String searchedKeysBulk, int nrOfResults) throws IOException {
+        ArrayList<String> command = new ArrayList<>();
+        command.add("python");
+        command.add(GlobalVariables.normalQueryPath);
+        command.add(searchedKeysBulk);
+        command.add("10");
+        Process process = PythonRunner.getInstance().runCommand(command);
+        String output = PythonRunner.getInstance().readProcessOutput(process.getInputStream());
+        return output;
     }
 }
