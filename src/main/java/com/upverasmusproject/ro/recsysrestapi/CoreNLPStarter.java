@@ -1,26 +1,19 @@
 package com.upverasmusproject.ro.recsysrestapi;
 
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.DefaultExecutor;
-import org.apache.commons.exec.PumpStreamHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class CoreNLPStarter implements  Runnable{
     private static final Logger log = LoggerFactory.getLogger(CoreNLPStarter.class);
-    private static final String path= "D:\\MachineLearningSpania\\stanford-server";
 
     @Override
     public void run() {
 
         try {
             if(Checker.portAvailable(9000)==true){
-                Process proc = Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"cd D:\\MachineLearningSpania\\stanford-server && " +
+                Process proc = Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"cd "+GlobalVariables.CoreNLPPath +" && " +
                         "java -Xmx4g -cp \"*\" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -serverProperties StanfordCoreNLP-spanish.properties -port 9000 -timeout 15000\"");
             }
             else{

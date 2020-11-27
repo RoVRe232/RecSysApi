@@ -5,10 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -18,8 +15,11 @@ public class Video {
     @GeneratedValue
     private Long dbid;
     private String id;
+    private String link;
+    @Lob
     private String title;
     private String date;
+    @Lob
     private ArrayList<String> keywords;
     private static ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
     public  Video(){};
@@ -31,6 +31,7 @@ public class Video {
 
     public Video(String id, String title, ArrayList<String> keywords) {
          this.id = id;
+         this.link = "https://media.upv.es/#/portal/video/"+id;
          this.title = title;
          this.keywords = keywords;
     }
@@ -38,6 +39,14 @@ public class Video {
     public String getId() {return id;}
 
     public void setId(String id){this.id = id;}
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
 
     public String getTitle() {
         return title;

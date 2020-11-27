@@ -13,6 +13,11 @@ public class Checker {
         System.out.println("Doing checks");
     }
 
+    public static boolean checkDependencies(){
+    //TODO implement this
+        return false;
+    }
+
     /**
      * Checks to see if a specific port is available.
      *

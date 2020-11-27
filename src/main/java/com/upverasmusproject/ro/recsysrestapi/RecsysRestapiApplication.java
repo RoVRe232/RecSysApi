@@ -13,7 +13,7 @@ import java.io.*;
 public class RecsysRestapiApplication {
 	private static final Logger log = LoggerFactory.getLogger(RecsysRestapiApplication.class);
 	private static final Process queryProcessor = PythonRunner.getInstance().runCommand(
-			PythonRunner.getInstance().buildSimplePythonRunnerCommand("D:\\MachineLearningSpania\\SearchForAQuery-master-v2\\SearchForQuery.py"));
+			PythonRunner.getInstance().buildSimplePythonRunnerCommand(GlobalVariables.PythonQueryPath));
 	private static final OutputStreamWriter queryProcessorWriter = new OutputStreamWriter(queryProcessor.getOutputStream());
 	private static final BufferedReader queryProcessorReader = new BufferedReader(
 			new InputStreamReader(queryProcessor.getInputStream()));
@@ -24,10 +24,10 @@ public class RecsysRestapiApplication {
 		System.setProperty("spring.devtools.restart.enabled", "false");
 		Checker.doChecks();
 
-//		Thread coreNLPThread = new Thread(new CoreNLPStarter());
-//		coreNLPThread.start();
-		CoreNLPStarter coreNLPStarter = new CoreNLPStarter();
-		coreNLPStarter.run();
+		Thread coreNLPThread = new Thread(new CoreNLPStarter());
+		coreNLPThread.start();
+//		CoreNLPStarter coreNLPStarter = new CoreNLPStarter();
+//		coreNLPStarter.run();
 
 		log.info("Started Stanford - CoreNLP");
 
@@ -36,7 +36,7 @@ public class RecsysRestapiApplication {
 		SpringApplication.run(RecsysRestapiApplication.class, args);
 
 		Thread loadVideosJson = new Thread(new VideoJSONLoader(
-				new File("D:\\MachineLearningSpania\\SearchForAQuery-master-v2\\videos_upv_cleaned.json"),
+				new File(GlobalVariables.videosUpvJson),
 				repo));
 		loadVideosJson.start();
 

@@ -10,8 +10,32 @@
     <input type="text" id="keywords" name="keywords"><br><br>
     <label for="usertoken">User token:</label>
     <input type="text" id="usertoken" name="usertoken"><br><br>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit"/>
 </form>
 <p>Token example: q2za-rtx5-4asd-rrrw for user John</p>
+
 </body>
 </html>
+
+<!--
+<script type="text/javascript">
+    console.log("hello world!");
+
+    const userAction = async (keywords, token) => {
+        console.log("hello from function!");
+
+        const response = await fetch('http://localhost:8080/search?keywords='+keywords+'&usertoken='+token);
+        const myJson = await response.json(); //extract JSON from the http response
+        // do something with myJson
+        console.log(myJson);
+    }
+
+    function getFormData(){
+        var keywords = document.getElementById('keywords');
+        var token = document.getElementById('usertoken');
+        userAction()
+    }
+
+
+</script>
+-->

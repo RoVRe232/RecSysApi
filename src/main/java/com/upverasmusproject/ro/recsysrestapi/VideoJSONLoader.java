@@ -26,11 +26,22 @@ public class VideoJSONLoader implements Runnable {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readTree(videosUpvJson);
         for(Iterator<JsonNode> it = root.elements(); it.hasNext();){
-            JsonNode element = it.next();
-            String _id = element.get("_id").asText();
-            String _title = element.get("title").asText();
-            JsonNode metadata = element.get("metadata");
-            String _keywords = metadata.get("keywords").asText();
+            JsonNode element=null,metadata=null,keywords=null, titleElement=null, idElement=null;
+            String _id="", _title="", _keywords="";
+            element = it.next();
+            if(element!=null) {
+                idElement = element.get("_id");
+                if(idElement!=null)
+                    _id = idElement.asText();
+                titleElement = element.get("title");
+                if(titleElement!=null)
+                    _title = titleElement.asText();
+                metadata = element.get("metadata");
+            }
+            if(metadata!= null)
+                keywords = metadata.get("keywords");
+            if(keywords!=null)
+                _keywords = keywords.toString().replaceAll("\\[|\\]|\\'|\"","");
 
             log.info("Loading in db:" +
                     repo.save(new Video(_id, _title,new ArrayList<String>(Arrays.asList(_keywords.split(" "))))));

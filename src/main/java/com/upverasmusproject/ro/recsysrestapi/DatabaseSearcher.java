@@ -55,7 +55,9 @@ public abstract class DatabaseSearcher {
             match = Double.parseDouble(it.substring(it.indexOf(',')+1, it.indexOf(')')).trim());
             title = it.substring(it.indexOf(')')+1).trim();
 
-            VideoResult videoResult = new VideoResult(id,match,Normalizer.normalize(title,Normalizer.Form.NFD));
+//            VideoResult videoResult = new VideoResult(id,match,Normalizer.normalize(title,Normalizer.Form.NFD));
+            VideoResult videoResult = new VideoResult(id,match,title);
+
             results.add(videoResult);
 
             //TODO either normalize all chars or use UTF-8 everywhere
