@@ -114,13 +114,13 @@ public class VideoController {
         }finally {
             errThread.interrupt();
         }
-
-
+        String oldQueryResults = PythonRunner.invokeOldQuery(searchedKeysBulk, 10);
+        System.out.println("old query results: "+ oldQueryResults);
         List<VideoResult> videoResults = DatabaseSearcher.processPythonQueryResultToList(queryResult.toString());
         List<Video> foundVideos = DatabaseSearcher.search(repo,DatabaseSearcher.processPythonQueryResult(queryResult.toString()));
         try {
             Thread logQueryResult = new Thread(new QueryLogger(searchedKeysBulk,
-                    DatabaseSearcher.writeListToJson(videoResults), currentUser));
+                    DatabaseSearcher.writeListToJson(videoResults), currentUser,oldQueryResults));
             logQueryResult.start();
             return DatabaseSearcher.writeListToJson(foundVideos);
         } catch (IOException e) {

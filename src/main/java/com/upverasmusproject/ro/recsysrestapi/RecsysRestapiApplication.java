@@ -28,7 +28,7 @@ public class RecsysRestapiApplication {
     private static UserRepository userRepository = null;
 	public static void main(String[] args) {
 		System.setProperty("spring.devtools.restart.enabled", "false");
-		Checker.doChecks();
+//		Checker.doChecks();
 
 		Thread coreNLPThread = new Thread(new CoreNLPStarter());
 		coreNLPThread.start();
