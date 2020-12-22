@@ -3,39 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="src/search.css">
 </head>
 <body>
-<form action="/search" method="get">
+<!-- <form action="javascript:;" onsubmit="getFormData()" id="searchform"><fieldset> -->
+    <!-- <input type="text" id="usertoken" name="usertoken" placeholder="User token..."/> -->
+    <!-- <input type="search" id="keywords" name="keywords" placeholder="Search..."/>
+    <button type="submit"><i class="fa fa-search"></i></button></fieldset></form> -->
+<!-- <form action="javascript:;" onsubmit="getFormData()" id="searchform">
     <label for="keywords">Search video:</label>
     <input type="text" id="keywords" name="keywords"><br><br>
     <label for="usertoken">User token:</label>
     <input type="text" id="usertoken" name="usertoken"><br><br>
     <input type="submit" value="Submit"/>
+</form> -->
+
+<h1 style="color: #ef3f5a;">Search for a video.</h1>
+<form  class="flex-form"  action="javascript:;" onsubmit="getFormData()" id="searchform">
+  <input type="text" id="usertoken" name="usertoken" placeholder="User token..."/>
+  <input type="search" id="keywords" name="keywords" placeholder="Query...">
+  <input type="submit" value="Search">
 </form>
+
 <p>Token example: q2za-rtx5-4asd-rrrw for user John</p>
 
 </body>
 </html>
 
-<!--
+
 <script type="text/javascript">
-    console.log("hello world!");
+//     console.log("hello world!");
+//     var myJson = JSON.parse(`[
+//   {
+//     "id": "08adc2f5-c44a-f743-82d6-cb79b851f67f",
+//     "link": "https://media.upv.es/#/portal/video/08adc2f5-c44a-f743-82d6-cb79b851f67f",
+//     "title": "Ley de Ohm. Resistencia electrica.",
+//     "date": null,
+//     "keywords": [
+//       "testkey1,testkey3",
+//       "testkey2"
+//     ]
+//   },
+//   {
+//     "id": "0x36-3232-asdd-14e",
+//     "link": "https://media.upv.es/#/portal/video/0x36-3232-asdd-14e",
+//     "title": "Sistema de sincronizacion con la red. Parte 3",
+//     "date": null,
+//     "keywords": [
+//       "testkey1",
+//       "testkey2"
+//     ]
+//   },
+//   {
+//     "id": "04043f5b-ab82-c448-8dfb-5cf3eaf075bd",
+//     "link": "https://media.upv.es/#/portal/video/04043f5b-ab82-c448-8dfb-5cf3eaf075bd",
+//     "title": "Rob�tica: componentes - Actuadores",
+//     "date": null,
+//     "keywords": [
+//       "testkey1",
+//       "testkey2"
+//     ]
+//   },
+//   {
+//     "id": "c826d416-0d02-8046-80d7-4772d8ce67e3",
+//     "link": "https://media.upv.es/#/portal/video/c826d416-0d02-8046-80d7-4772d8ce67e3",
+//     "title": "Motor de cont�nua. Cotrol Digital. (II)",
+//     "date": null,
+//     "keywords": [
+//       "testkey1",
+//       "testkey2"
+//     ]
+//   },
+//   {
+//     "id": "0x36-3232-asdd-14e",
+//     "link": "https://media.upv.es/#/portal/video/0x36-3232-asdd-14e",
+//     "title": "Transmisi�n",
+//     "date": null,
+//     "keywords": [
+//       "testkey1",
+//       "testkey2"
+//     ]
+//   },
+//   {
+//     "id": "02c7e485-40e2-9546-87ff-e939bb236ce0",
+//     "link": "https://media.upv.es/#/portal/video/02c7e485-40e2-9546-87ff-e939bb236ce0",
+//     "title": "Filtrado Digital",
+//     "date": null,
+//     "keywords": [
+//       "dsp,tms320f283xx,filtrado,digital,electrónica"
+//     ]
+//   },
+//   {
+//     "id": "08adc2f5-c44a-f743-82d6-cb79b851f67f",
+//     "link": "https://media.upv.es/#/portal/video/08adc2f5-c44a-f743-82d6-cb79b851f67f",
+//     "title": "Ley de Ohm. Resistencia electrica.",
+//     "date": null,
+//     "keywords": [
+//       "Ohm,tensión,corriente,intensidad,resistencia,cortocircuito,circuito",
+//       "abierto,TECNOLOGIA",
+//       "ELECTRONICA,3307",
+//       "-",
+//       "Tecnología electrónica"
+//     ]
+//   },
+//   {
+//     "id": "107d968b-fba2-b84f-b8d8-c90790432468",
+//     "link": "https://media.upv.es/#/portal/video/107d968b-fba2-b84f-b8d8-c90790432468",
+//     "title": "Recta tangente",
+//     "date": null,
+//     "keywords": [
+//       "recta,tangente,recta,secante,derivadas,matematicas"
+//     ]
+//   },
+//   {
+//     "id": "11afed6c-2e22-754e-8aee-7e54c19689f3",
+//     "link": "https://media.upv.es/#/portal/video/11afed6c-2e22-754e-8aee-7e54c19689f3",
+//     "title": "Sistema de sincronizacion con la red. Parte 3",
+//     "date": null,
+//     "keywords": [
+//       "pll,dsc,control,digital,energia"
+//     ]
+//   }
+// ]`);
+//     let jsonNode = myJson[0];
+//     let jsonId = jsonNode.link.split('/').pop();
+//     console.log(jsonNode.title);
+//     console.log(jsonNode.link);
+//     console.log(jsonNode.keywords);
+//     var allkeys = [];
+//     for(let i=0; jsonNode.keywords!=null && i<jsonNode.keywords.length; i++){
+//       console.log(jsonNode.keywords[i]);
+//       let keys = jsonNode.keywords[i].split(',');
+//       for(let j=0; j<keys.length; j++){
+//         allkeys.push(keys[j]);
+//       }
+//       console.log(keys);
+//     }
+//     console.log(allkeys);
+//     let cardtags = '';
+//     for(var j=0; allkeys!=null &&  j<allkeys.length; j++){
+//       let temptag = `<button onclick=dostuff() class="cardtag">${allkeys[j]}</button>`;
+//       cardtags = cardtags.concat(temptag);
+//     }
+//     console.log(cardtags);
 
     const userAction = async (keywords, token) => {
-        console.log("hello from function!");
+        if(document.contains(document.getElementById('loadingscreen'))){
+          let x = document.getElementById('loadingscreen');
+          x.parentNode.removeChild(x);
+        }
+        let loading = document.createElement('div');
+        loading.id = 'loadingscreen';
+        let sf = document.getElementById('searchform');
+        sf.parentNode.insertBefore(loading, sf.nextSibling);
 
         const response = await fetch('http://localhost:8080/search?keywords='+keywords+'&usertoken='+token);
         const myJson = await response.json(); //extract JSON from the http response
+
+        if(document.contains(document.getElementById('loadingscreen'))){
+          let x = document.getElementById('loadingscreen');
+          x.parentNode.removeChild(x);
+        }
+
+
         // do something with myJson
         console.log(myJson);
+        console.log(myJson.length);
+
+        if(document.contains(document.getElementById('resultcontainer'))){
+            let x = document.getElementById('resultcontainer');
+            x.parentNode.removeChild(x);
+        }
+
+        let element = document.createElement('div');
+        element.id = 'resultcontainer'
+        element.innerHTML = '<div id="result" width=500 height=500></div>'
+        document.body.appendChild(element);
+
+        for(let i=0; i<myJson.length; i++){
+            let jsonNode = myJson[i];
+            let jsonId = jsonNode.link.split('/').pop();
+            console.log(jsonNode.title);
+            console.log(jsonNode.link);
+            let card = document.createElement('div');
+            card.id = 'card'+i.toString();
+            card.className += " card"; 
+            let keywords = jsonNode.keywords;
+            let allkeys = [];
+
+            for( var j=0; keywords!=null && j<keywords.length; j++){
+              let keys = keywords[j].split(',');
+              for(var k=0; keys!=null && k<keys.length; k++){
+                allkeys.push(keys[k]);
+              }
+            }
+            
+            let cardtags = ``;
+            for(var j=0; allkeys!=null &&  j<allkeys.length; j++){
+              let temptag = `<button action="javascript:;" onclick='userAction("${allkeys[j]}","${token}")' class="cardtag">${allkeys[j]}</button>`;
+              cardtags = cardtags.concat(temptag);
+            }
+            console.log(cardtags);
+
+            card.innerHTML = `
+            <div class="carddescription">
+              <a target="_blank" rel="noopener noreferrer" href="${jsonNode.link}">${jsonNode.title}</a>
+              <button onclick="displayIframe('${card.id}','${jsonId}');">Open the video</button>
+              
+              <p style="width:200px;">Video tags:</p>
+              <div id=tagsdiv"${i.toString()}">
+                ${cardtags}
+              </div>
+
+            </div>`;
+
+            element.appendChild(card);
+            
+        }
     }
 
     function getFormData(){
         var keywords = document.getElementById('keywords');
         var token = document.getElementById('usertoken');
-        userAction()
+        console.log(keywords.value);
+        console.log(token.value);
+        userAction(keywords.value, token.value)
     }
 
+    function displayIframe(x, id){
+      let xval = document.getElementById(x);
+      let iframe = document.createElement('div');
+      iframe.innerHTML = `<iframe allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" src="https://media.upv.es/player/embed.html?autoplay=true&id=${id}" style="border:0px #FFFFFF none;" name="Paella Player" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" width="640" height="360"></iframe>`
+      xval.appendChild(iframe);
+    }
 
 </script>
--->
+

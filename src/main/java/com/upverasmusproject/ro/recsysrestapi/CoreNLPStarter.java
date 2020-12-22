@@ -13,7 +13,8 @@ public class CoreNLPStarter implements  Runnable{
 
         try {
             if(Checker.portAvailable(9000)==true){
-                Process proc = Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"cd "+GlobalVariables.CoreNLPPath +" && " +
+                Process proc = Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"cd "+GlobalVariables.CoreNLPPath +" && "
+                        +
                         "java -Xmx4g -cp \"*\" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -serverProperties StanfordCoreNLP-spanish.properties -port 9000 -timeout 15000\"");
             }
             else{

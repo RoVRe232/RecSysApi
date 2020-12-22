@@ -1,7 +1,11 @@
 package com.upverasmusproject.ro.recsysrestapi;
 
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,10 +30,12 @@ public class RecsysRestapiApplication {
 	private static final StreamGobbler queryProcessorErrGobbler = new StreamGobbler(queryProcessor.getErrorStream(), "ERROR");
     private static VideoRepository repo = null;
     private static UserRepository userRepository = null;
+
+
+
 	public static void main(String[] args) {
 		System.setProperty("spring.devtools.restart.enabled", "false");
 //		Checker.doChecks();
-
 		Thread coreNLPThread = new Thread(new CoreNLPStarter());
 		coreNLPThread.start();
 //		CoreNLPStarter coreNLPStarter = new CoreNLPStarter();
@@ -38,7 +44,8 @@ public class RecsysRestapiApplication {
 		log.info("Started Stanford - CoreNLP");
 
 
-		
+
+
 		SpringApplication.run(RecsysRestapiApplication.class, args);
 
 		Thread loadVideosJson = new Thread(new VideoJSONLoader(

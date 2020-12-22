@@ -81,7 +81,6 @@ public class VideoController {
         if(searchedKeysBulk==null)
             return null;
 
-        String[] searchedKeys = searchedKeysBulk.split(" ");
         System.out.println(searchedKeysBulk);
 
         OutputStreamWriter queryWriter = RecsysRestapiApplication.getQueryProcessorWriter();

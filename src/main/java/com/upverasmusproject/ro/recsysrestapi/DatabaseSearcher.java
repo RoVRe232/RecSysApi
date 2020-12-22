@@ -16,7 +16,7 @@ public abstract class DatabaseSearcher {
         List<Video> result = new ArrayList<Video>();
         for (Video it : allvideos) {
             for (String title : searchedTitles) {
-                if (it.getTitle().contains(title)) {
+                if (it.getTitle().equals(title)) {
                     result.add(it);
                     break;
                 }
