@@ -3,7 +3,7 @@ package com.upverasmusproject.ro.recsysrestapi;
 import java.io.*;
 
 public class QueryLogger implements Runnable{
-    private static final File outputFile = new File("D:\\MachineLearningSpania\\SearchForAQuery-master-v2\\queriesLog.txt");
+    private static final File outputFile = new File(GlobalVariables.LogFile);
     private BufferedWriter outputFileWriter;
     private String query;
     private String queryResult;
@@ -37,10 +37,12 @@ public class QueryLogger implements Runnable{
     public synchronized void writeQueryResult(String query, String queryResult, User user) throws IOException {
         setFileWriter();
         if(user!=null)
-            outputFileWriter.write("[\"user\":"+user.toString()+",\n");
+            outputFileWriter.write("{\"user\":"+user.toString()+",\n");
+        else
+            outputFileWriter.write("{\"user\":"+"0"+",\n");
         outputFileWriter.write("\"query\":\""+query+"\",\n");
         outputFileWriter.write("\"oldqueryresult\":"+oldQueryResult+",\n");
-        outputFileWriter.write("\"queryresult:"+queryResult+"]]\n");
+        outputFileWriter.write("\"queryresult\":"+queryResult.replace("\"\"","\"")+"}\n");
         outputFileWriter.close();
     }
 

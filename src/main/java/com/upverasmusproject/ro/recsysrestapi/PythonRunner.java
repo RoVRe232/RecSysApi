@@ -37,6 +37,17 @@ public class PythonRunner {
         }
     }
 
+    public Process runSearchForQuery()  {
+        Process proc = null;
+        try {
+            proc = Runtime.getRuntime().exec("cmd /c start /B cmd.exe /K \"conda activate recenv && cd "+
+                    GlobalVariables.PythonQueryFolderPath +" && " + "python SearchForQuery.py\"");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return proc;
+    }
+
 
     public String readProcessOutput(InputStream is) throws IOException {
         String buffer = "";

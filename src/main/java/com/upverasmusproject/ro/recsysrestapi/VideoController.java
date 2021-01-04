@@ -73,6 +73,7 @@ public class VideoController {
     String searchMethod(@RequestParam HashMap<String,Object> formData) throws IOException {
         User currentUser = null;
         String userToken = (String)formData.get("usertoken");
+        //add support for host ip for anonymous searches
         if(!(userToken==null || userToken.equals(""))){
              currentUser = userRepo.findUserByToken(userToken);
         }
@@ -145,6 +146,13 @@ public class VideoController {
 
         return PythonRunner.invokeOldQuery(searchedKeysBulk, 10);
     }
+
+
+
+
+
+
+
 /*
     @GetMapping("/callpython")
     OutputStreamWriter callPython(){

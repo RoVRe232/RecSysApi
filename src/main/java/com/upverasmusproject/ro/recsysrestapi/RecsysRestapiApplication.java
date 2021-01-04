@@ -22,8 +22,7 @@ import java.io.*;
 @EnableSwagger2
 public class RecsysRestapiApplication {
 	private static final Logger log = LoggerFactory.getLogger(RecsysRestapiApplication.class);
-	private static final Process queryProcessor = PythonRunner.getInstance().runCommand(
-			PythonRunner.getInstance().buildSimplePythonRunnerCommand(GlobalVariables.PythonQueryPath));
+	private static final Process queryProcessor = PythonRunner.getInstance().runSearchForQuery();
 	private static final OutputStreamWriter queryProcessorWriter = new OutputStreamWriter(queryProcessor.getOutputStream());
 	private static final BufferedReader queryProcessorReader = new BufferedReader(
 			new InputStreamReader(queryProcessor.getInputStream()));
@@ -43,7 +42,8 @@ public class RecsysRestapiApplication {
 
 		log.info("Started Stanford - CoreNLP");
 
-
+		Thread closeChilds = new Thread(() -> RecsysRestapiApplication.queryProcessor.destroy());
+		Runtime.getRuntime().addShutdownHook(closeChilds);
 
 
 		SpringApplication.run(RecsysRestapiApplication.class, args);
