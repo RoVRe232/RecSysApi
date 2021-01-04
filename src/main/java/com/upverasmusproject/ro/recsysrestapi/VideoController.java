@@ -2,17 +2,9 @@ package com.upverasmusproject.ro.recsysrestapi;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.python.core.PyInstance;
-import org.python.core.PyInteger;
-import org.python.core.PyObject;
-import org.python.core.PyString;
-import org.python.util.PythonInterpreter;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -148,6 +140,43 @@ public class VideoController {
     }
 
 
+    @GetMapping("/users")
+    List<User> allUsers(){
+        return userRepo.findAll();
+    }
+
+    @PostMapping("/users")
+    User newUser(@RequestBody User newVideo){
+        return userRepo.save(newVideo);
+    }
+
+    @GetMapping("/users/{id}")
+    User oneUser(@PathVariable Long id){
+        return  userRepo.findById(id).orElseThrow(()->new VideoNotFoundException(id));
+    }
+
+    @PostMapping("/users/{id}")
+    User replaceUser(@RequestBody User newUser, @PathVariable Long id){
+
+        return  userRepo.findById(id)
+                .map(user -> {
+                    user.setLearningType(newUser.getLearningType());
+                    user.setQueries(newUser.getQueries());
+                    user.setToken(newUser.getToken());
+                    user.setUsername(newUser.getUsername());
+                    return userRepo.save(user);
+                }).orElseGet(()->{
+                    newUser.setId(id);
+                    return userRepo.save(newUser);
+                });
+
+
+    }
+
+    @DeleteMapping("/users/{id}")
+    void deleteUser(@PathVariable Long id){
+        userRepo.deleteById(id);
+    }
 
 
 
