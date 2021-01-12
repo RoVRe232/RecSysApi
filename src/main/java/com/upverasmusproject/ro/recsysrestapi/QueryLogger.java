@@ -42,7 +42,7 @@ public class QueryLogger implements Runnable{
             outputFileWriter.write("{\"user\":"+"0"+",\n");
         outputFileWriter.write("\"query\":\""+query+"\",\n");
         outputFileWriter.write("\"oldqueryresult\":"+oldQueryResult+",\n");
-        outputFileWriter.write("\"queryresult\":"+queryResult.replace("\"\"","\"")+"}\n");
+        outputFileWriter.write("\"queryresult\":"+queryResult.replace("\"\"","\"")+"},\n");
         outputFileWriter.close();
     }
 
