@@ -157,7 +157,7 @@
         let sf = document.getElementById('searchform');
         sf.parentNode.insertBefore(loading, sf.nextSibling);
 
-        const response = await fetch('http://localhost:8080/search?keywords='+keywords+'&usertoken='+token);
+        const response = await fetch('http://localhost:8080/videos/search?keywords='+keywords+'&usertoken='+token);
         const myJson = await response.json(); //extract JSON from the http response
 
         if(document.contains(document.getElementById('loadingscreen'))){

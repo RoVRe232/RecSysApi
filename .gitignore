@@ -32,3 +32,9 @@ build/
 ### VS Code ###
 .vscode/
 /queryTimeResults.json
+
+### Unnecesary resources ###
+/resources/videos_upv.json
+/resources/videos_upv_cleaned.json
+/resources/core-nlp/*
+/resources/core-nlp/
